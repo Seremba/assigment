@@ -45,4 +45,25 @@ public interface AquariumRepository extends Repository<Aquarium, UUID> {
     List<Aquarium> allAquariums();
 
 
+    @Query(rowMapperClass = FishRowMapper.class,
+           value = "with cte_no_compatible as (select specie_a, group_concat(specie_b) no_compatible from FISH_NO_COMPATIBLE group by specie_a) select specie, fins, color, stock, aquarium_id, no_compatible from Fish left join cte_no_compatible on specie_a = specie where specie  = :specie")
+    Fish findFishById(@Param("specie") String specie);
+
+    @Modifying
+    @Query("update Fish set fins = :fins, color = :color, stock = :stock, aquarium_id = :aquarium_id) where specie = :specie")
+    void updateFish(@Param("specie") String specie,
+                    @Param("fins") int fins,
+                    @Param("color") Colors color,
+                    @Param("stock") int stock,
+                    @Param("aquarium_id") UUID id);
+
+    @Modifying
+    @Query("delete from fish_no_compatible where specie_a = :specie")
+    void deleteNoCompatileFish(@Param("specie") String specie);
+
+    @Modifying
+    @Query("insert into fish_no_compatible (specie_a, specie_b) values (:specie_a, :specie_b)")
+    void addNoCompatibleFish(@Param("specie_a") String specieA,
+                             @Param("specie_b") String specieB);
+
 }

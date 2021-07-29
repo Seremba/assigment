@@ -1,5 +1,9 @@
 package com.saburto.petfishstore.domain.model;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class FishWithThreeFinsCantGoInSmallAquariumException extends RuntimeException {
 
     public FishWithThreeFinsCantGoInSmallAquariumException() {

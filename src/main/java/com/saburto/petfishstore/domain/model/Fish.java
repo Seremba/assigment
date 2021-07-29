@@ -11,9 +11,9 @@ import lombok.Value;
 public class Fish {
     private static final int FINS_OF_BIG_FISH = 3;
     private String specie;
-    private int fins;
+    private Integer fins;
     private Colors color;
-    private int stock;
+    private Integer stock;
     private Set<String> noCompatibleSpecies;
     private UUID aquariumId;
 

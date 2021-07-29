@@ -2,14 +2,15 @@ package com.saburto.petfishstore.applications;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.UUID;
 
-import com.saburto.petfishstore.api.NewFishRequestInput;
-import com.saburto.petfishstore.api.NewFishRequestInput.NewFishRequestInputBuilder;
+import com.saburto.petfishstore.api.FishRequestInput;
+import com.saburto.petfishstore.api.FishRequestInput.FishRequestInputBuilder;
 import com.saburto.petfishstore.domain.model.Aquarium;
 import com.saburto.petfishstore.domain.model.Colors;
 import com.saburto.petfishstore.domain.model.Fish;
@@ -18,6 +19,7 @@ import com.saburto.petfishstore.domain.services.AquariumService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.dao.DuplicateKeyException;
 
 public class FishCreatorTest {
 
@@ -44,6 +46,21 @@ public class FishCreatorTest {
             .isInstanceOf(RuntimeException.class)
             .hasMessageContaining(noExistAquarium.toString())
             .hasMessageContaining("not found");
+    }
+
+    @Test
+    void create_new_fish_that_already_exist_throw_exception() {
+
+        var emptyAquarium = UUID.randomUUID();
+        when(aquariumService.getById(emptyAquarium)).thenReturn(Aquarium.builder().build());
+
+        doThrow(DuplicateKeyException.class).when(aquariumService).addNewFish(any());
+        var newFish = newGoldFish(emptyAquarium);
+
+        assertThatThrownBy(() -> creator.newFishInAquarium(newFish))
+            .isInstanceOf(RuntimeException.class)
+            .hasMessageContaining(newFish.getSpecie())
+            .hasMessageContaining("already exists");
     }
 
     @Test
@@ -110,13 +127,13 @@ public class FishCreatorTest {
 
     }
 
-    private NewFishRequestInput newGoldFish(UUID aquariumId) {
+    private FishRequestInput newGoldFish(UUID aquariumId) {
         return newFishBuilder(aquariumId)
             .build();
     }
 
-    private NewFishRequestInputBuilder newFishBuilder(UUID aquariumId) {
-        return NewFishRequestInput.builder()
+    private FishRequestInputBuilder newFishBuilder(UUID aquariumId) {
+        return FishRequestInput.builder()
             .specie("goldfish")
             .color(Colors.GOLDEN)
             .fins(1)

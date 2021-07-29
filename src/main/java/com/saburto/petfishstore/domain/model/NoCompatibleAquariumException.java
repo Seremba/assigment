@@ -2,6 +2,10 @@ package com.saburto.petfishstore.domain.model;
 
 import java.util.Collection;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class NoCompatibleAquariumException extends RuntimeException {
 
     public NoCompatibleAquariumException(String newSpecie, Collection<String> noCompatibles) {

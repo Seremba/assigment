@@ -1,7 +1,5 @@
 package com.saburto.petfishstore.domain.services;
 
-import static java.util.stream.Collectors.toSet;
-
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
@@ -43,6 +41,30 @@ public class AquariumService {
                               fish.getColor(),
                               fish.getStock(),
                               aquarium.getId());
+
+        updateNoCompatibleFish(fish);
+    }
+
+    private void updateNoCompatibleFish(Fish fish) {
+        repository.deleteNoCompatileFish(fish.getSpecie());
+        fish.getNoCompatibleSpecies()
+            .forEach(s -> repository.addNoCompatibleFish(fish.getSpecie(), s));
+    }
+
+    public void updateFish(Aquarium aquarium) {
+        var fish = aquarium.getNewFish();
+        repository.updateFish(fish.getSpecie(),
+                              fish.getFins(),
+                              fish.getColor(),
+                              fish.getStock(),
+                              aquarium.getId());
+
+        updateNoCompatibleFish(fish);
+    }
+
+    public Fish getFish(String specie) {
+        return Optional.ofNullable(repository.findFishById(specie))
+            .orElseThrow(() -> new NoFishFoundException(specie));
     }
 
 }

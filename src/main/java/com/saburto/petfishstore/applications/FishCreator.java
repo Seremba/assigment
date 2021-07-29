@@ -1,9 +1,11 @@
 package com.saburto.petfishstore.applications;
 
+import com.saburto.petfishstore.domain.model.FishAlreadyExistsException;
 import com.saburto.petfishstore.domain.model.NewFishRequest;
 import com.saburto.petfishstore.domain.services.AquariumService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +26,11 @@ public class FishCreator {
 
         var newAquarium = aquarium.withNewFish(newFishRequest.toFish());
 
-        aquariumService.addNewFish(newAquarium);
+        try {
+            aquariumService.addNewFish(newAquarium);
+        } catch (DuplicateKeyException ex) {
+            throw new FishAlreadyExistsException(newFishRequest.getSpecie());
+        }
     }
 
 }

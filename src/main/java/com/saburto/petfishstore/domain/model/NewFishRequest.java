@@ -7,7 +7,8 @@ public interface NewFishRequest {
 
     String getSpecie();
     Colors getColor();
-    int getFins();
+    Integer getFins();
+    Integer getStock();
     UUID getAquariumID();
     Set<String> getNoCompatibleSpecies();
 
@@ -15,6 +16,7 @@ public interface NewFishRequest {
         return Fish.builder()
             .specie(getSpecie())
             .color(getColor())
+            .stock(getStock())
             .noCompatibleSpecies(getNoCompatibleSpecies())
             .fins(getFins())
             .build();
