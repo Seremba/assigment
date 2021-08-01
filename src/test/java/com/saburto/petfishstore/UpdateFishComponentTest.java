@@ -66,7 +66,7 @@ public class UpdateFishComponentTest extends ComponentTestBase {
 
     private ResponseEntity<String> whenUpdateFishAquarium(String specie, String aquariumId) {
         var request = Map.of("specie", specie,
-                             "aquariumId", aquariumId);
+                             "aquariumID", aquariumId);
 
         return whenUpdateFish(request);
     }

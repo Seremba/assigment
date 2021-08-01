@@ -64,29 +64,17 @@ public abstract class ComponentTestBase {
                              "fins", fins,
                              "stock", stock,
                              "noCompatibleSpecies", noCompatible,
-                             "aquariumId", aquariumId);
+                             "aquariumID", aquariumId);
 
         return restTemplate.postForEntity(url + "/fish", request, String.class);
     }
 
     protected String givenAnAquariumId() {
-        return givenAnAquarium(size -> size >= 75);
-    }
-
-    protected ResponseEntity<JsonNode> allAquariums() {
-        return restTemplate.getForEntity(url + "/aquariums", JsonNode.class);
+        return "Aquarium2";
     }
 
     protected String givenAnSmallAquariumId() {
-        return givenAnAquarium(size -> size <= 75);
-    }
-
-    protected String givenAnAquarium(Predicate<Integer> filter) {
-        return StreamSupport.stream(allAquariums().getBody().spliterator(), false)
-            .filter(n -> filter.test(n.get("size").get("liters").asInt()))
-            .map(n -> n.get("id").asText())
-            .findFirst()
-            .orElseThrow();
+        return "Aquarium3";
     }
 
     protected void assertStatusCode(ResponseEntity<String> response, HttpStatus httpStatus) {
