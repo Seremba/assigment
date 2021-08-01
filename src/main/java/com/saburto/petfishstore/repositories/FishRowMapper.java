@@ -1,5 +1,7 @@
 package com.saburto.petfishstore.repositories;
 
+import static org.springframework.util.ObjectUtils.isEmpty;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -33,7 +35,8 @@ public class FishRowMapper implements RowMapper<Fish> {
     }
 
     private Set<String> convertToSet(String noCompatibles) {
-        if (noCompatibles == null || noCompatibles.isBlank()) {
+
+        if (isEmpty(noCompatibles)) {
             return Set.of();
         }
         var output = new HashSet<String>();

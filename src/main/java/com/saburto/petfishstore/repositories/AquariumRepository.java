@@ -50,7 +50,7 @@ public interface AquariumRepository extends Repository<Aquarium, UUID> {
     Fish findFishById(@Param("specie") String specie);
 
     @Modifying
-    @Query("update Fish set fins = :fins, color = :color, stock = :stock, aquarium_id = :aquarium_id) where specie = :specie")
+    @Query("update Fish set fins = :fins, color = :color, stock = :stock, aquarium_id = :aquarium_id where specie = :specie")
     void updateFish(@Param("specie") String specie,
                     @Param("fins") int fins,
                     @Param("color") Colors color,

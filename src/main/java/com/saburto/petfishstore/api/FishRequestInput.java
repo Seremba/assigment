@@ -7,10 +7,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 
 import com.saburto.petfishstore.domain.model.Colors;
 import com.saburto.petfishstore.domain.model.UpdateFishRequest;
+
+import org.springframework.util.StringUtils;
 
 import lombok.Builder;
 import lombok.Singular;
@@ -43,7 +44,7 @@ public class FishRequestInput implements UpdateFishRequest {
 
     @Override
     public UUID getAquariumID() {
-        return UUID.fromString(aquariumId);
+        return StringUtils.hasText(aquariumId) ? UUID.fromString(aquariumId) : null;
     }
 
 
