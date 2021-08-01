@@ -27,9 +27,9 @@ create table Fish_no_compatible (
 
 create index IDX_fish_by_aquarium on Fish (aquarium_id);
 
-insert into Aquarium values (UUID(), 'STRONG', 199, 'RECTANGLE');
-insert into Aquarium values (UUID(), 'STRONG', 300, 'RECTANGLE');
-insert into Aquarium values (UUID(), 'STRONG', 30, 'RECTANGLE');
+insert into Aquarium values (UUID_TO_BIN(UUID()), 'STRONG', 199, 'RECTANGLE');
+insert into Aquarium values (UUID_TO_BIN(UUID()), 'STRONG', 300, 'RECTANGLE');
+insert into Aquarium values (UUID_TO_BIN(UUID()), 'STRONG', 30, 'RECTANGLE');
 
 insert into Fish(specie, fins, color, stock, aquarium_id)
 select 'goldfish', 2, 'GOLDEN', 12, id
