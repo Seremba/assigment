@@ -3,7 +3,6 @@ package com.saburto.petfishstore.api;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.saburto.petfishstore.domain.model.Aquarium;
@@ -36,7 +35,7 @@ public class AquariumController {
 
     @JsonView(Views.Public.class)
     @GetMapping("/{id}")
-    public Aquarium findById(@PathVariable("id") UUID id) {
+    public Aquarium findById(@PathVariable("id") String id) {
         return Optional.ofNullable(repository.findById(id))
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                                                            id.toString() + " not found"));
@@ -44,7 +43,7 @@ public class AquariumController {
 
 
     @GetMapping("/{id}/fishes")
-    public Set<Fish> fishes(@PathVariable("id") UUID id) {
+    public Set<Fish> fishes(@PathVariable("id") String id) {
         return repository.findSpeciesByAquariumId(id);
     }
 

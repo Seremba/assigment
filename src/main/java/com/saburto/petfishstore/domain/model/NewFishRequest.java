@@ -1,7 +1,6 @@
 package com.saburto.petfishstore.domain.model;
 
 import java.util.Set;
-import java.util.UUID;
 
 public interface NewFishRequest {
 
@@ -9,7 +8,7 @@ public interface NewFishRequest {
     Colors getColor();
     Integer getFins();
     Integer getStock();
-    UUID getAquariumID();
+    String getAquariumID();
     Set<String> getNoCompatibleSpecies();
 
     default Fish toFish() {

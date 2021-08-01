@@ -1,7 +1,6 @@
 package com.saburto.petfishstore.domain.model;
 
 import java.util.Set;
-import java.util.UUID;
 
 import lombok.Builder;
 import lombok.Value;
@@ -15,7 +14,7 @@ public class Fish {
     private Colors color;
     private Integer stock;
     private Set<String> noCompatibleSpecies;
-    private UUID aquariumId;
+    private String aquariumId;
 
     public boolean isBig() {
         return fins >= FINS_OF_BIG_FISH;

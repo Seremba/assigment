@@ -22,7 +22,7 @@ public class AquariumRepositoryTest {
 
     @Test
     void aquarium_not_found_return_null() {
-        assertThat(repo.findById(UUID.randomUUID())).isNull();
+        assertThat(repo.findById(UUID.randomUUID().toString())).isNull();
     }
 
     @Test
@@ -75,8 +75,8 @@ public class AquariumRepositoryTest {
 
     }
 
-    private UUID insertNewAquarium() {
-        var id = UUID.randomUUID();
+    private String insertNewAquarium() {
+        var id = UUID.randomUUID().toString();
 
         repo.insert(id, GlassType.STRONG.name(), 1, Shape.RECTANGLE.name());
         return id;

@@ -1,12 +1,11 @@
 package com.saburto.petfishstore.domain.services;
 
 import java.util.Optional;
-import java.util.UUID;
 import java.util.function.Function;
 
 import com.saburto.petfishstore.domain.model.Aquarium;
-import com.saburto.petfishstore.domain.model.Fish;
 import com.saburto.petfishstore.domain.model.Aquarium.AquariumBuilder;
+import com.saburto.petfishstore.domain.model.Fish;
 import com.saburto.petfishstore.repositories.AquariumRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class AquariumService {
         this.repository = repository;
     }
 
-    public Aquarium getById(UUID aquariumID) {
+    public Aquarium getById(String aquariumID) {
         return Optional.ofNullable(repository.findById(aquariumID))
             .map(Aquarium::toBuilder)
             .map(addFishes(aquariumID))
@@ -30,7 +29,7 @@ public class AquariumService {
             .orElseThrow(() -> new NoAquariumFoundException(aquariumID));
     }
 
-    private Function<AquariumBuilder, AquariumBuilder> addFishes(UUID aquariumID) {
+    private Function<AquariumBuilder, AquariumBuilder> addFishes(String aquariumID) {
         return builder -> builder.fishes(repository.findSpeciesByAquariumId(aquariumID));
     }
 

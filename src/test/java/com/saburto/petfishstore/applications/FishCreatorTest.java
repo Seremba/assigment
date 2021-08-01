@@ -34,7 +34,7 @@ public class FishCreatorTest {
 
     @Test
     void create_new_fish_and_put_in_an_aquarium_that_doesnt_exist_throw_exception() {
-        var noExistAquarium = UUID.randomUUID();
+        var noExistAquarium = UUID.randomUUID().toString();
 
         when(aquariumService.getById(noExistAquarium))
             .thenThrow(new RuntimeException(noExistAquarium.toString() + " not found"));
@@ -51,7 +51,7 @@ public class FishCreatorTest {
     @Test
     void create_new_fish_that_already_exist_throw_exception() {
 
-        var emptyAquarium = UUID.randomUUID();
+        var emptyAquarium = UUID.randomUUID().toString();
         when(aquariumService.getById(emptyAquarium)).thenReturn(Aquarium.builder().build());
 
         doThrow(DuplicateKeyException.class).when(aquariumService).addNewFish(any());
@@ -65,7 +65,7 @@ public class FishCreatorTest {
 
     @Test
     void create_new_fish_and_put_in_an_empty_aquarium() {
-        var emptyAquarium = UUID.randomUUID();
+        var emptyAquarium = UUID.randomUUID().toString();
         when(aquariumService.getById(emptyAquarium)).thenReturn(Aquarium.builder().build());
 
         var newFish = newGoldFish(emptyAquarium);
@@ -78,7 +78,7 @@ public class FishCreatorTest {
     @Test
     void create_new_goldfish_and_put_in_an_aquarium_with_guppies_should_throw_exception() {
 
-        var aquariumWithGuppies = UUID.randomUUID();
+        var aquariumWithGuppies = UUID.randomUUID().toString();
 
         when(aquariumService.getById(aquariumWithGuppies))
             .thenReturn(Aquarium.builder().fish(newFish("guppy")).build());
@@ -94,7 +94,7 @@ public class FishCreatorTest {
     @Test
     void create_new_guppy_and_put_in_an_aquarium_with_goldfish_should_throw_exception() {
 
-        var aquariumWithGoldfish = UUID.randomUUID();
+        var aquariumWithGoldfish = UUID.randomUUID().toString();
 
         when(aquariumService.getById(aquariumWithGoldfish))
             .thenReturn(Aquarium.builder().fish(newGoldFish(aquariumWithGoldfish).toFish()).build());
@@ -112,7 +112,7 @@ public class FishCreatorTest {
     @Test
     void create_a_fish_with_3_fins_in_a_small_aquarium_should_throw_exception() {
 
-        var smallAquarium = UUID.randomUUID();
+        var smallAquarium = UUID.randomUUID().toString();
 
         when(aquariumService.getById(smallAquarium))
             .thenReturn(Aquarium.builder().size(Size.ofLiters(12)).build());
@@ -127,18 +127,18 @@ public class FishCreatorTest {
 
     }
 
-    private FishRequestInput newGoldFish(UUID aquariumId) {
+    private FishRequestInput newGoldFish(String aquariumId) {
         return newFishBuilder(aquariumId)
             .build();
     }
 
-    private FishRequestInputBuilder newFishBuilder(UUID aquariumId) {
+    private FishRequestInputBuilder newFishBuilder(String aquariumId) {
         return FishRequestInput.builder()
             .specie("goldfish")
             .color(Colors.GOLDEN)
             .fins(1)
             .noCompatibleSpecie("guppy")
-            .aquariumId(aquariumId.toString());
+            .aquariumID(aquariumId);
     }
 
     private Fish newFish(String specie) {

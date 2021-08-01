@@ -21,7 +21,7 @@ public class FishRowMapper implements RowMapper<Fish> {
         var fins = rs.getInt("fins");
         var stock = rs.getInt("stock");
         var color = rs.getString("color");
-        var aquariumId = rs.getBytes("aquarium_id");
+        var aquariumId = rs.getString("aquarium_id");
         var noCompatibles = rs.getString("no_compatible");
 
         return Fish.builder()
@@ -29,7 +29,7 @@ public class FishRowMapper implements RowMapper<Fish> {
             .fins(fins)
             .stock(stock)
             .noCompatibleSpecies(convertToSet(noCompatibles))
-            .aquariumId(AquariumRowMapper.toUUID(aquariumId))
+            .aquariumId(aquariumId)
             .color(Colors.valueOf(color))
             .build();
     }

@@ -37,7 +37,7 @@ public class AquariumServiceTest {
         var response = Aquarium.builder().build();
         when(mock.findById(any())).thenReturn(response);
 
-        var aq = service.getById(UUID.randomUUID());
+        var aq = service.getById(UUID.randomUUID().toString());
         assertThat(aq).isEqualTo(response);
     }
 
@@ -45,7 +45,7 @@ public class AquariumServiceTest {
     void throw_exception_if_aquarium_is_not_found() {
         when(mock.findById(any())).thenReturn(null);
 
-        assertThatThrownBy(() -> service.getById(UUID.randomUUID()))
+        assertThatThrownBy(() -> service.getById(UUID.randomUUID().toString()))
             .isInstanceOf(NoAquariumFoundException.class);
     }
 
@@ -65,14 +65,14 @@ public class AquariumServiceTest {
         when(mock.findSpeciesByAquariumId(any()))
             .thenReturn(fishes);
 
-        var aq = service.getById(UUID.randomUUID());
+        var aq = service.getById(UUID.randomUUID().toString());
 
         assertThat(aq.getFishes()).isEqualTo(fishes);
     }
 
     @Test
     void verify_insert_fish_is_called_when_add_new_fish() {
-        var id = UUID.randomUUID();
+        var id = UUID.randomUUID().toString();
         var aq = Aquarium.builder().id(id)
             .size(Size.ofLiters(78))
             .build()
@@ -84,7 +84,7 @@ public class AquariumServiceTest {
 
     @Test
     void verify_update_fish_is_called() {
-        var id = UUID.randomUUID();
+        var id = UUID.randomUUID().toString();
         var aq = Aquarium.builder().id(id).size(Size.ofLiters(78)).build().withNewFish(newFish("swordfish"));
         service.updateFish(aq);
 

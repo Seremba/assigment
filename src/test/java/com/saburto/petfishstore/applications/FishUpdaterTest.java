@@ -43,7 +43,7 @@ public class FishUpdaterTest {
                                                       .specie("some")
                                                       .fins(1)
                                                       .stock(1)
-                                                      .aquariumId(UUID.randomUUID())
+                                                      .aquariumId(UUID.randomUUID().toString())
                                                       .noCompatibleSpecies(Set.of())
                                                       .build());
         when(service.getById(any())).thenReturn(Aquarium.builder()

@@ -3,7 +3,6 @@ package com.saburto.petfishstore.domain.model;
 import static java.util.stream.Collectors.toSet;
 
 import java.util.Set;
-import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -20,7 +19,7 @@ public class Aquarium {
     private static final int SMALL_LITERS = 75;
 
     @JsonView(Views.Public.class)
-    UUID id;
+    String id;
 
 
     @JsonView(Views.Public.class)
